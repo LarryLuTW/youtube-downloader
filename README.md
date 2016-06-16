@@ -1,6 +1,6 @@
 # Youtube Downloader
 
-youtube-downloader is command line tool to download youtube music to mp3 file.
+youtube downloader is command line tool to download youtube music.
 
 ## Requirement
 

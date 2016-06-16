@@ -8,9 +8,8 @@ youtube downloader is command line tool to download youtube music.
 
 ## Install
 
-```
+```bash
 # install as command line tool
-
 npm install Larry850806/youtube-downloader -g
 ```
 
@@ -18,7 +17,6 @@ npm install Larry850806/youtube-downloader -g
 
 ```bash
 # youtube-downloader [url]
-
 youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg  
 ```
 

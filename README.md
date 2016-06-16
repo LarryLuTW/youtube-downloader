@@ -1,6 +1,6 @@
 # Youtube Downloader
 
-### youtube downloader is command line tool to download youtube music.
+youtube downloader is command line tool to download youtube music.
 
 ## Requirement
 

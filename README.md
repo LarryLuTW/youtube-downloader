@@ -1,22 +1,25 @@
-# youtube-downloader
+# Youtube Downloader
 
-### youtube-downloader is command line tool to download youtube music to mp3 file.
+youtube-downloader is command line tool to download youtube music to mp3 file.
 
-# Requirement
+## Requirement
 
 - `node >= 0.12.7`
 
-# Install
+## Install
 
 ```
-npm install Larry850806/youtube-downloader -g  # install as command line tool
+# install as command line tool
+
+npm install Larry850806/youtube-downloader -g
 ```
 
-# How To Use
+## How To Use
 
 ```bash
-youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg  // download "Taylor Swift - Blank Space" to mp3
 # youtube-downloader [url]
+
+youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg  
 ```
 
 # License

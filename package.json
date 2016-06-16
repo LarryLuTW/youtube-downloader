@@ -1,5 +1,5 @@
 {
-  "name": "youtube-download",
+  "name": "youtube-downloader",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,10 +10,9 @@
   "bin": {
     "youtube-downloader": "app.js"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Larry Lu",
   "license": "ISC"
 }

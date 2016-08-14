@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "cheerio": "^0.20.0",
+    "co": "^4.6.0",
     "request": "^2.72.0"
   },
   "bin": {

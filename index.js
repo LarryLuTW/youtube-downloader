@@ -1,6 +1,8 @@
+var co = require('co');
 var fs = require('fs');
 var cheerio = require('cheerio');
 var request = require('request');
+var bluebird = require('bluebird');
 var getRS = require('./getRS');
 
 var getIDFromUrl = function(youtubeUrl){
@@ -16,7 +18,8 @@ var getIDFromUrl = function(youtubeUrl){
         };
 
         request.get({url: url, qs: qs}, function(err, res, body){
-            if(err || res.statusCode != 200) throw err;
+            if(err || res.statusCode != 200)
+                return reject(err);
             resolve(body);
         });
     });
@@ -35,7 +38,9 @@ var getLinkFromID = function(id){
         }
         
         request.get({url: url, qs: qs}, function(err, res, body){
-            if(err || res.statusCode != 200) throw err;
+            if(err || res.statusCode != 200)
+                return reject(err)
+
             body = body.substring(7).split(';')[0];
             var json = JSON.parse(body);
 
@@ -53,7 +58,9 @@ var getLinkFromID = function(id){
 var getTitleFromUrl = function(youtubeUrl){
     return new Promise((resolve, reject) => {
         request.get({url: youtubeUrl}, function(err, res, body){
-            if(err || res.statusCode != 200) throw err;
+            if(err || res.statusCode != 200)
+                return reject(err);
+
             var $ = cheerio.load(body);
             var title = $('#watch7-content meta').attr('content');
             resolve(title);
@@ -61,49 +68,29 @@ var getTitleFromUrl = function(youtubeUrl){
     });
 };
 
-
 var downloadFromLink = function(link, title){
     return new Promise((resolve, reject) => {
-        request(link).pipe(fs.createWriteStream(title + '.mp3')).on('close', function(){
-            resolve('done');
-        });
+        request(link).pipe(fs.createWriteStream(title + '.mp3'))
+            .on('close', () => resolve('done'))
+            .on('error', (err) => reject(err));
     });
 };
 
-var downloadFromYoutubeLink = function(youtubeLink){
-
-    var getLink = getIDFromUrl(youtubeLink).then((id) => {
+var downloadFromYoutubeLink = function(url){
+    co(function*(){
+        var id = yield getIDFromUrl(url);
         console.log('get ID success');
-        return getLinkFromID(id);
-    }).then((downloadLink) => {
-        console.log('get link success');
-        return downloadLink;
-    });
 
-    var getTitle = getTitleFromUrl(youtubeLink).then((title) => {
+        var title = yield getTitleFromUrl(url);
         console.log('get title success');
-        return title;
-    });
 
-    Promise.all([getLink, getTitle]).then((values) => {
+        var link = yield getLinkFromID(id);
+        console.log('get link success');
 
-        var downloadLink = values[0];
-        var title = values[1];
-        console.log('start download: ' + title);
-        return downloadFromLink(downloadLink, title);
-
-    }).then((finish) => {
-
+        console.log('start download:', title);
+        yield downloadFromLink(link, title);
         console.log('download complete');
-
-    }).catch((err) => {
-
-        console.log('there is some error:');
-        console.log(err);
-        throw err;
-
-    });
-
+    }).catch(err => console.log(err));
 };
 
 module.exports = downloadFromYoutubeLink;

@@ -78,14 +78,17 @@ var downloadFromLink = function(link, title){
 
 var downloadFromYoutubeLink = function(url){
     co(function*(){
-        var id = yield getIDFromUrl(url);
-        console.log('get ID success');
+        var idPromise = getIDFromUrl(url);
+        var titlePromise = getTitleFromUrl(url);
 
-        var title = yield getTitleFromUrl(url);
-        console.log('get title success');
+        var id = yield idPromise;
+        console.log('get ID success');
 
         var link = yield getLinkFromID(id);
         console.log('get link success');
+
+        var title = yield titlePromise;
+        console.log('get title success');
 
         console.log('start download:', title);
         yield downloadFromLink(link, title);

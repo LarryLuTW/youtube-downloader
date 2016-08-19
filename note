@@ -1,5 +1,0 @@
-r = (new Date()).getTime()
-
-c = sig_url -> 增加了 s
-c = _sig(a)
-s = escape(c)

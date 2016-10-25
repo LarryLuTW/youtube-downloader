@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var babel = require('gulp-babel');
 var ts = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
+var changed = require('gulp-changed');
 
 var compilerOptions = require('./tsconfig.json').compilerOptions;
 
@@ -11,6 +12,7 @@ const WATCH_LIST = ['src/**/*.ts', 'index.ts'];
 
 gulp.task('tsc-es6', function () {
     return gulp.src(SRC)
+        .pipe(changed(DEST))
         .pipe(sourcemaps.init())
         .pipe(ts(compilerOptions))
         .on('error', function (err) {

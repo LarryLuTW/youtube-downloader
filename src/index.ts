@@ -1,6 +1,7 @@
 var fs = require('fs');
 var request = require('request');
 var Promise: PromiseConstructor = require('bluebird');
+var ProgressBar = require('progress');
 var encode = require('./encode');
 
 function getID(youtubeLink: string): string {
@@ -28,9 +29,31 @@ async function getDownloadInfo(id: string): Promise<any> {
     });
 }
 
+async function getFileStream(downloadLink): Promise<any> {
+    return new Promise((resolve, reject) => {
+        var stream = request(downloadLink)
+            .on('response', (res) => {
+                resolve({ stream, contentLength: parseInt(res.headers['content-length'], 10) });
+            })
+            .on('error', (err) => {
+                reject(err);
+            });
+    });
+}
+
 async function download({ downloadLink, filename }): Promise<any> {
+    var bar = null;
     return new Promise((resolve, reject) => {
         request(downloadLink)
+            .on('response', res => {
+                bar = new ProgressBar('downloading [:bar] :percent :etas', {
+                    complete: '=',
+                    incomplete: ' ',
+                    width: 60,
+                    total: parseInt(res.headers['content-length'], 10)
+                });
+            })
+            .on('data', chunk => bar.tick(chunk.length))
             .pipe(fs.createWriteStream(filename))
             .on('finish', resolve)
             .on('error', err => reject(err));

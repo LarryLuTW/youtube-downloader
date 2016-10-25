@@ -14,14 +14,14 @@ async function getDownloadInfo(id: string): Promise<any> {
         var form = {
             vid: 'vqG50KnqwBcsBAfSqxHw4nuWHxR6AdmvLpUYNPKBhbxhezjoiANkGPLD3xXT80p1'
         };
-        request({ url, form }, function(err, res, body){
-            if(err || res.statusCode != 200) return reject(err);
+        request({ url, form }, function (err, res, body) {
+            if (err || res.statusCode != 200) return reject(err);
             try {
                 var json = JSON.parse(body);
                 var filename = json.filename;
                 var downloadLink = 'http://149.202.207.209' + json.link;
                 resolve({ downloadLink, filename });
-            } catch(err) {
+            } catch (err) {
                 return reject(err);
             }
         });
@@ -37,17 +37,17 @@ async function download({ downloadLink, filename }): Promise<any> {
     });
 }
 
-(async function(){
-    
+(async function () {
+
     var youtubeLink = process.argv[2];
-    if(!youtubeLink){
-        console.log('node index.js [youtube link]');
+    if (!youtubeLink) {
+        console.log('usage: youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg');
         process.exit(1);
     }
-     
+
     var id = getID(youtubeLink);
     var info = await getDownloadInfo(id);
-    console.log('downloading ' + info.filename);
+    console.log(info.filename);
     await download(info);
     console.log('finish');
 

@@ -13,7 +13,7 @@ youtube downloader is command line tool to download youtube music.
 
 ```bash
 # install as command line tool
-npm install Larry850806/youtube-downloader -g
+npm install Larry850806/youtube-downloader --production -g
 ```
 
 ## How To Use

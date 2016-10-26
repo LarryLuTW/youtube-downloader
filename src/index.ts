@@ -1,8 +1,9 @@
-var fs = require('fs');
-var request = require('request');
-var Promise: PromiseConstructor = require('bluebird');
-var ProgressBar = require('progress');
-var encode = require('./encode');
+import fs = require('fs');
+import request = require('request');
+import ProgressBar = require('progress');
+import encode = require('./encode');
+import checkVersion = require('./checkVersion');
+Promise = require('bluebird');
 
 function getID(youtubeLink: string): string {
     var ID = youtubeLink.split('v=')[1].substr(0, 11);
@@ -49,7 +50,7 @@ async function download({ downloadLink, filename }): Promise<any> {
                 bar = new ProgressBar('downloading [:bar] :percent :etas', {
                     complete: '=',
                     incomplete: ' ',
-                    width: 60,
+                    width: Math.floor((<any>process.stdout).columns / 3),
                     total: parseInt(res.headers['content-length'], 10)
                 });
             })
@@ -67,6 +68,9 @@ async function download({ downloadLink, filename }): Promise<any> {
         console.log('usage: youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg');
         process.exit(1);
     }
+
+    var updateMessage = await checkVersion();
+    if (updateMessage) process.exit(0);
 
     var id = getID(youtubeLink);
     var info = await getDownloadInfo(id);

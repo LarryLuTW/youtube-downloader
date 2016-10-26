@@ -20,7 +20,7 @@ npm install Larry850806/youtube-downloader --production -g
 
 ```bash
 # youtube-downloader [url]
-youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg  
+youtube-downloader 'https://www.youtube.com/watch?v=e-ORhEE9VVg'
 ```
 
 ## Example

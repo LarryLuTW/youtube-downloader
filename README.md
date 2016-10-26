@@ -2,6 +2,8 @@
 
 youtube downloader is command line tool to download youtube music.
 
+![](http://i.imgur.com/dmCudq7.gif)
+
 ## Requirement
 
 - `node >= 0.11.13`

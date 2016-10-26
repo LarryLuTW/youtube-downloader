@@ -65,7 +65,7 @@ async function download({ downloadLink, filename }): Promise<any> {
 
     var youtubeLink = process.argv[2];
     if (!youtubeLink) {
-        console.log('usage: youtube-downloader https://www.youtube.com/watch?v=e-ORhEE9VVg');
+        console.log(`usage: youtube-downloader 'https://www.youtube.com/watch?v=e-ORhEE9VVg'`);
         process.exit(1);
     }
 

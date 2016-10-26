@@ -4,10 +4,9 @@ youtube downloader is command line tool to download youtube music.
 
 ## Requirement
 
-- `npm`
 - `node >= 0.11.13`
 
-[install npm and node](https://nodejs.org/en/)
+### [install node here](https://nodejs.org/en/)
 
 ## Install
 

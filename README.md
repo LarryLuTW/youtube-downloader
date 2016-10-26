@@ -2,7 +2,7 @@
 
 youtube downloader is command line tool to download youtube music.
 
-![](https://github.com/Larry850806/youtube-downloader/blob/master/gif/youtube-downloader.gif)
+![demo](gif/youtube-downloader.gif)
 
 ## Requirement
 
